@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
 
     @Autowired
@@ -27,11 +27,13 @@ public class BookingController {
         return bookingService.getAllBooking(email);
     }
 
+    @PutMapping("/updateBooking")
     public ResponseEntity<String> updateBooking(@RequestBody Booking booking) {
         bookingService.updateBooking(booking);
         return new ResponseEntity<>("Booking is updated", HttpStatus.OK);
     }
 
+    @PutMapping("/cancelBooking")
     public ResponseEntity<String> cancelBooking(@RequestBody Booking booking) {
         bookingService.cancelBooking(booking);
         return new ResponseEntity<>("Booking is cancelled", HttpStatus.OK);

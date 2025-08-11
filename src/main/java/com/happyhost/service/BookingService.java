@@ -17,6 +17,7 @@ public class BookingService {
     private BookingRepository bookingRepository;
 
     public Booking book(Booking booking) {
+        booking.setStatus(Status.BOOKED);
         return bookingRepository.save(booking);
     }
 
@@ -43,7 +44,7 @@ public class BookingService {
         Optional<Booking> bookingOptional = bookingRepository.findById(booking.getId());
         if (bookingOptional.isPresent()) {
             Booking booking1 = bookingOptional.get();
-            booking1.setStatus(Status.CANCELED);
+            booking1.setStatus(Status.CANCELLED);
             booking1.setEmail(booking.getEmail());
             booking1.setId(booking.getId());
             booking1.setTime(booking.getTime());
