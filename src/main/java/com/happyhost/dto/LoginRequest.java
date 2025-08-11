@@ -1,7 +1,7 @@
 package com.happyhost.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.*;
+
 
 public class LoginRequest {
 

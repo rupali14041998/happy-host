@@ -49,15 +49,15 @@ public class BookingServiceTest {
     void testUpdateBookingSuccess() {
         // Given
         Booking booking = new Booking();
-        booking.setId("1");
+        booking.setId(1l);
         booking.setEmail("test@example.com");
         booking.setTime(LocalDateTime.now().toString());
         booking.setName("test");
 
         Booking existingBooking = new Booking();
-        existingBooking.setId("1");
+        existingBooking.setId(1l);
 
-        Mockito.when(bookingRepository.findById("1"))
+        Mockito.when(bookingRepository.findById(1l))
                 .thenReturn(Optional.of(existingBooking));
 
         // When
@@ -74,9 +74,9 @@ public class BookingServiceTest {
     @Test
     void testUpdateBookingNotFound() {
         Booking booking = new Booking();
-        booking.setId("101");
+        booking.setId(101l);
 
-        Mockito.when(bookingRepository.findById("101"))
+        Mockito.when(bookingRepository.findById(101l))
                 .thenReturn(Optional.empty());
 
         assertThrows(BookingNotFoundException.class, () -> {
@@ -88,21 +88,21 @@ public class BookingServiceTest {
     void testCancelBookingSuccess() {
 
         Booking inputBooking = new Booking();
-        inputBooking.setId("1L");
+        inputBooking.setId(1l);
         inputBooking.setEmail("cancel@example.com");
         inputBooking.setName("John Doe");
         inputBooking.setTime(LocalDateTime.now().toString());
 
         Booking existingBooking = new Booking();
-        existingBooking.setId("1L");
-        existingBooking.setStatus(Status.CANCELED); // initial status
+        existingBooking.setId(1l);
+        existingBooking.setStatus(Status.CANCELLED); // initial status
 
-        Mockito.when(bookingRepository.findById("1L"))
+        Mockito.when(bookingRepository.findById(1L))
                 .thenReturn(Optional.of(existingBooking));
         bookingService.cancelBooking(inputBooking);
         Mockito.verify(bookingRepository).save(Mockito.argThat(saved ->
-                saved.getId().equals("1L") &&
-                        saved.getStatus() == Status.CANCELED &&
+                saved.getId().equals(1l) &&
+                        saved.getStatus() == Status.CANCELLED &&
                         saved.getEmail().equals("cancel@example.com") &&
                         saved.getName().equals("John Doe")
         ));
@@ -111,9 +111,9 @@ public class BookingServiceTest {
     @Test
     void testCancelBookingNotFound() {
         Booking inputBooking = new Booking();
-        inputBooking.setId("999L"); // non-existent ID
+        inputBooking.setId(999L); // non-existent ID
 
-        Mockito.when(bookingRepository.findById("999L"))
+        Mockito.when(bookingRepository.findById(999L))
                 .thenReturn(Optional.empty());
         BookingNotFoundException exception = assertThrows(BookingNotFoundException.class, () -> {
             bookingService.cancelBooking(inputBooking);

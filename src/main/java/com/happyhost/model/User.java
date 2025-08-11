@@ -1,14 +1,14 @@
 package com.happyhost.model;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection = "users")  // ✅ CORRECT
+@Entity
+@Table(name = "users")
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
+    @Column
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -16,7 +16,7 @@ public class User {
     private String gender;
     private String password;
 
-    public User(String id, String firstName, String lastName, String email, String mobile, String gender, String password) {
+    public User(Long id, String firstName, String lastName, String email, String mobile, String gender, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,11 +29,11 @@ public class User {
     public User() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

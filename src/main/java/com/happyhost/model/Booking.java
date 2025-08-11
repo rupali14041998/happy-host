@@ -1,22 +1,25 @@
 package com.happyhost.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection = "bookings")
+@Entity
+@Table(name = "bookings")  // ✅ CORRECT
 public class Booking {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private Long id;
     private String name;
     private String email;
     private String time;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Booking() {
     }
 
-    public Booking(String id, String name, String email, String time, Status status) {
+    public Booking(Long id, String name, String email, String time, Status status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -24,11 +27,11 @@ public class Booking {
         this.status = status;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
